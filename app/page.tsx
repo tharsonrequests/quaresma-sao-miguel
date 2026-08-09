@@ -1,6 +1,7 @@
 import { SacredBackground } from "@/components/sacred-background"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
+import { IntroVideo } from "@/components/intro-video"
 import { CurrentDay } from "@/components/current-day"
 import { VideoGrid } from "@/components/video-grid"
 import { PrayerGuide } from "@/components/prayer-guide"
@@ -17,6 +18,7 @@ export default function HomePage() {
         <Header />
         <main>
           <Hero />
+          <IntroVideo />
           <CurrentDay />
           <VideoGrid />
           <PrayerGuide />

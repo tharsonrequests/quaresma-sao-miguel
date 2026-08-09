@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 
 const NAV_ITEMS = [
   { label: "Início", href: "#inicio" },
+  { label: "Preparação", href: "#preparacao" },
   { label: "Hoje", href: "#hoje" },
   { label: "Todos os Dias", href: "#todos-os-dias" },
   { label: "Como Rezar", href: "#como-rezar" },

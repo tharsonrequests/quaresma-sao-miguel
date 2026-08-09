@@ -4,25 +4,13 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { CalendarClock, Play, Sparkles } from "lucide-react"
 import { useQuaresma } from "@/hooks/use-quaresma"
-import { useCountdown } from "@/hooks/use-countdown"
 import { START_DATE, formatDate, getThumbnail } from "@/lib/quaresma"
 import { useVideoModal } from "@/components/video-modal"
 import { ProgressBar } from "@/components/progress-bar"
-
-function CountdownUnit({ value, label }: { value: number; label: string }) {
-  return (
-    <div className="flex flex-col items-center rounded-xl border border-border bg-card/60 px-4 py-3 sm:px-6">
-      <span className="font-serif text-3xl font-semibold tabular-nums text-gold sm:text-4xl">
-        {String(value).padStart(2, "0")}
-      </span>
-      <span className="mt-1 text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">{label}</span>
-    </div>
-  )
-}
+import { Countdown } from "@/components/countdown"
 
 export function CurrentDay() {
   const { status, currentDay, totalDays, video, daysUntilStart, ready } = useQuaresma()
-  const countdown = useCountdown(START_DATE)
   const { openVideo } = useVideoModal()
 
   const Section = ({ children }: { children: React.ReactNode }) => (
@@ -58,11 +46,8 @@ export function CurrentDay() {
             <p className="mx-auto mt-3 max-w-md text-pretty text-muted-foreground">
               Prepare o coração. Faltam {daysUntilStart} {daysUntilStart === 1 ? "dia" : "dias"} para o início dos 40 dias de oração.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <CountdownUnit value={countdown.days} label="Dias" />
-              <CountdownUnit value={countdown.hours} label="Horas" />
-              <CountdownUnit value={countdown.minutes} label="Min" />
-              <CountdownUnit value={countdown.seconds} label="Seg" />
+            <div className="mt-8">
+              <Countdown target={START_DATE} />
             </div>
           </div>
         )}
