@@ -66,7 +66,7 @@ const TITLES = [
 
 /** Gera a data (AAAA-MM-DD) do dia N a partir de 15/08/2026. */
 function dateForDay(day: number): string {
-  const start = new Date(Date.UTC(2026, 7, 8)) // mês 7 = agosto
+  const start = new Date(Date.UTC(2026, 7, 15)) // mês 7 = agosto
   start.setUTCDate(start.getUTCDate() + (day - 1))
   return start.toISOString().slice(0, 10)
 }
