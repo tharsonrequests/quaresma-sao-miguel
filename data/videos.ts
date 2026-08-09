@@ -77,7 +77,7 @@ export const videos: Video[] = Array.from({ length: 40 }, (_, i) => {
     day,
     title: TITLES[i],
     // Substitua pelo ID real do vídeo do YouTube de cada dia.
-    youtubeId: "",
+    youtubeId: "ZyXjTHdzy5I&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=39",
     thumbnail: THUMB,
     date: dateForDay(day),
   }
