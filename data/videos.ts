@@ -78,11 +78,18 @@ export const videos: Video[] = Array.from({ length: 40 }, (_, i) => {
     title: TITLES[i],
     // Substitua pelo ID real do vídeo do YouTube de cada dia.
     youtubeId: "Jl4JCz5bMaY?si=Fn4jLZlSgXD0Jt1y",
+    thumbnail: THUMB,
+    date: dateForDay(day),
+  }
+  })
+
+  export const videos: Video[] = Array.from({ length: 40 }, (_, i) => {
+  const day = i + 2
+  return {
+    day,
+    title: TITLES[i],
+    // Substitua pelo ID real do vídeo do YouTube de cada dia.
     youtubeId: "S0RdtSLmJ4I?si=IKEGJphKf5MAVU1B",
-    youtubeId: "uQzslqg3cio?si=lCeXl4oIY5l-M1ye",
-    youtubeId: "54Yn-gJxf_4?si=W9wBV2LHgDDPCGuj",
-    youtubeId: "ZyXjTHdzy5I?si=sal_PXRT9UKp_Xpe",
-    
     thumbnail: THUMB,
     date: dateForDay(day),
   }
