@@ -75,7 +75,7 @@ export function getCurrentDay(now: Date = new Date()): CurrentDayInfo {
  * true  = todos os 40 vídeos disponíveis imediatamente.
  * false = cada dia é liberado automaticamente na sua data.
  */
-export const RELEASE_ALL_NOW = true
+export const RELEASE_ALL_NOW = false
 
 /** Um vídeo está desbloqueado se seu dia já chegou (ou a Quaresma terminou). */
 export function isVideoUnlocked(video: Video, now: Date = new Date()): boolean {
