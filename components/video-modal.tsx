@@ -2,9 +2,9 @@
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Check, Share2, X } from "lucide-react"
+import { Check, ExternalLink, Share2, X } from "lucide-react"
 import type { Video } from "@/data/videos"
-import { formatDate, getEmbedUrl } from "@/lib/quaresma"
+import { formatDate, getEmbedUrl, getWatchUrl } from "@/lib/quaresma"
 import { useProgressContext } from "@/components/progress-provider"
 
 interface VideoModalContextValue {
@@ -135,15 +135,44 @@ export function VideoModalProvider({ children }: { children: ReactNode }) {
                 )}
               </div>
 
-              <div className="flex items-center justify-end gap-3 p-4 sm:p-5">
-                <button
-                  type="button"
-                  onClick={handleShare}
-                  className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-sm font-medium text-gold transition-colors hover:bg-gold/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                >
-                  {copied ? <Check className="size-4" /> : <Share2 className="size-4" />}
-                  {copied ? "Link copiado" : "Compartilhar este dia"}
-                </button>
+              <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                {video.youtubeId ? (
+                  <p className="text-xs text-muted-foreground">
+                    O vídeo não carregou?{" "}
+                    <a
+                      href={getWatchUrl(video.youtubeId)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-gold underline underline-offset-2 hover:text-gold/80"
+                    >
+                      Assista direto no YouTube
+                    </a>
+                    .
+                  </p>
+                ) : (
+                  <span />
+                )}
+                <div className="flex items-center gap-3">
+                  {video.youtubeId && (
+                    <a
+                      href={getWatchUrl(video.youtubeId)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                    >
+                      <ExternalLink className="size-4" />
+                      YouTube
+                    </a>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-sm font-medium text-gold transition-colors hover:bg-gold/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  >
+                    {copied ? <Check className="size-4" /> : <Share2 className="size-4" />}
+                    {copied ? "Link copiado" : "Compartilhar"}
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

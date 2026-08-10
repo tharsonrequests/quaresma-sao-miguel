@@ -70,8 +70,16 @@ export function getCurrentDay(now: Date = new Date()): CurrentDayInfo {
   }
 }
 
+/**
+ * Controla se os vídeos ficam liberados por data ou todos de uma vez.
+ * true  = todos os 40 vídeos disponíveis imediatamente.
+ * false = cada dia é liberado automaticamente na sua data.
+ */
+export const RELEASE_ALL_NOW = true
+
 /** Um vídeo está desbloqueado se seu dia já chegou (ou a Quaresma terminou). */
 export function isVideoUnlocked(video: Video, now: Date = new Date()): boolean {
+  if (RELEASE_ALL_NOW) return true
   const info = getCurrentDay(now)
   if (info.status === "after") return true
   if (info.status === "before") return false
@@ -85,9 +93,26 @@ export function getThumbnail(video: Video): string {
   return "/images/thumb-placeholder.png"
 }
 
-/** URL de incorporação (embed) do YouTube. */
+/** URL de incorporação (embed) do YouTube.
+ * Usa o domínio "nocookie" e informa a origem correta — isso evita a maioria
+ * dos casos de tela preta / "Video player configuration error" em iframes.
+ */
 export function getEmbedUrl(youtubeId: string): string {
-  return `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`
+  const params = new URLSearchParams({
+    autoplay: "1",
+    rel: "0",
+    modestbranding: "1",
+    playsinline: "1",
+  })
+  if (typeof window !== "undefined") {
+    params.set("origin", window.location.origin)
+  }
+  return `https://www.youtube-nocookie.com/embed/${youtubeId}?${params.toString()}`
+}
+
+/** Link direto para assistir no YouTube (fallback quando o embed é bloqueado). */
+export function getWatchUrl(youtubeId: string): string {
+  return `https://www.youtube.com/watch?v=${youtubeId}`
 }
 
 /** Formata "AAAA-MM-DD" para "DD/MM/AAAA". */
