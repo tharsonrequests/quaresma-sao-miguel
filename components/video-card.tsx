@@ -57,9 +57,16 @@ export function VideoCard({ video, unlocked, watched, onPlay }: VideoCardProps) 
         )}
 
         {unlocked && (
-          <span className="absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold/90 text-gold-foreground opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
-            <Play className="size-5 translate-x-0.5 fill-current" />
-          </span>
+          <button
+            type="button"
+            onClick={() => onPlay(video)}
+            aria-label={`Assistir ao dia ${video.day}: ${video.title}`}
+            className="absolute inset-0 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            <span className="flex size-12 items-center justify-center rounded-full bg-gold/90 text-gold-foreground opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
+              <Play className="size-5 translate-x-0.5 fill-current" />
+            </span>
+          </button>
         )}
       </div>
 
