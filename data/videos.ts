@@ -35,7 +35,7 @@ const THUMB = "/images/thumb-placeholder.png"
  */
 const LINKS: string[] = [
   "https://www.youtube.com/watch?v=kGVELI-Bgxg&t=4s", // Dia 1
-  "", // Dia 2
+  "https://www.youtube.com/watch?v=54Yn-gJxf_4&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=38", // Dia 2
   "", // Dia 3
   "", // Dia 4
   "", // Dia 5
