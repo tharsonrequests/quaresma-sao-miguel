@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next"
 export const dynamic = "force-static"
 
 // Altere para o domínio final do site (ou defina NEXT_PUBLIC_SITE_URL).
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://juntosemoracao.com.br"
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://juntosemoracao.com.br/"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
