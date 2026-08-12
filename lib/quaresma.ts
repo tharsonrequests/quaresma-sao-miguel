@@ -4,7 +4,7 @@ import { videos, type Video } from "@/data/videos"
  * Configuração central da Quaresma.
  * Para mudar quando a Quaresma começa, altere apenas START_DATE.
  */
-export const START_DATE = new Date(2026, 7, 12, 0, 0, 0, 0) // 15 de agosto de 2026
+export const START_DATE = new Date(2026, 5, 15, 0, 0, 0, 0) // 15 de agosto de 2026
 export const TOTAL_DAYS = videos.length // 40
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24
