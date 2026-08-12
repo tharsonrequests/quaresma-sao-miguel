@@ -46,8 +46,16 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Quaresma de São Miguel",
+    title: "c",
   },
+   images: [
+      {
+        url: '/images/sao-miguel-bg.png.',
+        width: 1200,
+        height: 630,
+        alt: 'Quaresma de São Miguel 2026',
+      },
+    ],
   formatDetection: { telephone: false },
   openGraph: {
     type: "website",
