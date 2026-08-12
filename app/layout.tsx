@@ -20,7 +20,7 @@ const SITE_TITLE = "Quaresma de São Miguel Arcanjo 2026"
 const SITE_DESCRIPTION =
   "40 dias de oração, fé e combate espiritual. Acompanhe diariamente a Quaresma de São Miguel Arcanjo 2026 com um vídeo de meditação por dia."
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://quaresma-sao-miguel.example.com"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://juntosemoracao.com.br"
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
