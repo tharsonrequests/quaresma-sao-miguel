@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "2026",
   ],
   authors: [{ name: "Quaresma de São Miguel" }],
-  generator: "v0.app",
+  generator: "",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
