@@ -36,7 +36,7 @@ const THUMB = "/images/thumb-placeholder.png"
  * Cole o link de cada dia na linha correspondente (entre as aspas).
  */
 const LINKS: string[] = [
-  "https://www.youtube.com/watch?v=ZyXjTHdzy5I&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=39/?simular=2026-08-15", // Dia 1
+  "https://www.youtube.com/watch?v=ZyXjTHdzy5I&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=39", // Dia 1
   "https://www.youtube.com/watch?v=54Yn-gJxf_4&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=38", // Dia 2
   "https://www.youtube.com/watch?v=uQzslqg3cio&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=37", // Dia 3
   "https://www.youtube.com/watch?v=S0RdtSLmJ4I&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=36", // Dia 4
