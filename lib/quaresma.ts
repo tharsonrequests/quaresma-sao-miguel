@@ -160,27 +160,20 @@ export function getThumbnail(video: Video): string {
 /**
  * URL de incorporação (embed) do YouTube.
  *
- * Usamos o domínio PADRÃO `youtube.com` de propósito. O domínio de
- * "privacidade avançada" (youtube-nocookie.com) é o que dispara com mais
- * frequência a tela "Faça login para confirmar que você não é um bot",
- * então o evitamos aqui.
+ * Mantemos EXATAMENTE os parâmetros da versão que reproduzia com um
+ * único clique: `autoplay=1&rel=0&modestbranding=1`, no domínio padrão
+ * `youtube.com`.
  *
- * Parâmetros:
- * - autoplay=1  → no computador inicia sozinho (no celular o navegador
- *   sempre exige um toque para liberar o som — isso é regra do sistema).
- * - playsinline=1 → no celular, reproduz dentro da página, sem forçar a
- *   tela cheia; assim o próprio toque no play já inicia a reprodução.
+ * Importante: NÃO adicionar `playsinline`. Esse parâmetro faz o player
+ * aguardar um segundo toque (no próprio player do YouTube) antes de
+ * iniciar, quebrando o autoplay com um clique só.
+ *
+ * - autoplay=1  → inicia a reprodução assim que o player abre.
  * - rel=0       → evita vídeos de outros canais ao final.
  * - modestbranding=1 → interface mais discreta.
  */
 export function getEmbedUrl(youtubeId: string): string {
-  const params = new URLSearchParams({
-    autoplay: "1",
-    playsinline: "1",
-    rel: "0",
-    modestbranding: "1",
-  })
-  return `https://www.youtube.com/embed/${youtubeId}?${params.toString()}`
+  return `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`
 }
 
 /** Formata "AAAA-MM-DD" para "DD/MM/AAAA". */
