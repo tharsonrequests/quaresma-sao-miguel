@@ -160,28 +160,20 @@ export function getThumbnail(video: Video): string {
 /**
  * URL de incorporação (embed) do YouTube.
  *
- * NO COMPUTADOR: `autoplay=1&rel=0&modestbranding=1` no domínio padrão
- * `youtube.com` — inicia com som e com um único clique.
+ * Mantemos EXATAMENTE os parâmetros da versão que reproduzia com um
+ * único clique: `autoplay=1&rel=0&modestbranding=1`, no domínio padrão
+ * `youtube.com`.
  *
- * NO CELULAR (muted=true): os navegadores de celular (iOS/Android)
- * BLOQUEIAM a reprodução automática COM som — por isso o player abriria
- * pausado, exigindo um segundo toque. Reprodução automática SEM som é
- * sempre permitida, então adicionamos `mute=1` + `playsinline=1`: o vídeo
- * começa sozinho com um único toque e o usuário ativa o som pelo próprio
- * player. Isso é uma regra do sistema, não há como reproduzir com som
- * automaticamente no celular.
+ * Importante: NÃO adicionar `playsinline`. Esse parâmetro faz o player
+ * aguardar um segundo toque (no próprio player do YouTube) antes de
+ * iniciar, quebrando o autoplay com um clique só.
+ *
+ * - autoplay=1  → inicia a reprodução assim que o player abre.
+ * - rel=0       → evita vídeos de outros canais ao final.
+ * - modestbranding=1 → interface mais discreta.
  */
-export function getEmbedUrl(youtubeId: string, muted = false): string {
-  const params = new URLSearchParams({
-    autoplay: "1",
-    rel: "0",
-    modestbranding: "1",
-  })
-  if (muted) {
-    params.set("mute", "1")
-    params.set("playsinline", "1")
-  }
-  return `https://www.youtube.com/embed/${youtubeId}?${params.toString()}`
+export function getEmbedUrl(youtubeId: string): string {
+  return `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`
 }
 
 /** Formata "AAAA-MM-DD" para "DD/MM/AAAA". */
