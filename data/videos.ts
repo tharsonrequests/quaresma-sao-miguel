@@ -93,7 +93,7 @@ const TITLES = [
   "Rezar bem o terço",
   "As Sagradas Escrituras",
   "Amizades de Deus",
-  "A persistencia na oração",
+  "A persistência na oração",
   "O início da convesão",
   "A fé deve aumentar!",
   "",
