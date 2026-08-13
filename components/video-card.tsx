@@ -70,7 +70,7 @@ export function VideoCard({ video, unlocked, watched, onPlay }: VideoCardProps) 
         )}
 
         {unlocked && (
-          <span className="absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold/90 text-gold-foreground opacity-90 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
+          <span className="pointer-events-none absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold text-gold-foreground opacity-100 shadow-lg transition-transform duration-300 group-hover:scale-110">
             <Play className="size-5 translate-x-0.5 fill-current" />
           </span>
         )}
