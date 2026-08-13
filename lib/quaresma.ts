@@ -157,9 +157,28 @@ export function getThumbnail(video: Video): string {
   return "/images/thumb-placeholder.png"
 }
 
-/** URL de incorporação (embed) do YouTube. */
+/**
+ * URL de incorporação (embed) do YouTube.
+ *
+ * Usamos o domínio `youtube-nocookie.com` (modo de privacidade avançada),
+ * que é o oficialmente recomendado para incorporação e evita a tela
+ * "Faça login para confirmar que você não é um bot".
+ *
+ * Parâmetros:
+ * - autoplay=1  → tenta iniciar sozinho.
+ * - playsinline=1 → no celular, reproduz dentro da página (sem forçar
+ *   tela cheia), o que permite o toque único iniciar o vídeo.
+ * - rel=0       → evita vídeos de outros canais ao final.
+ * - modestbranding=1 → interface mais discreta.
+ */
 export function getEmbedUrl(youtubeId: string): string {
-  return `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`
+  const params = new URLSearchParams({
+    autoplay: "1",
+    playsinline: "1",
+    rel: "0",
+    modestbranding: "1",
+  })
+  return `https://www.youtube-nocookie.com/embed/${youtubeId}?${params.toString()}`
 }
 
 /** Formata "AAAA-MM-DD" para "DD/MM/AAAA". */
