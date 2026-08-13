@@ -2,12 +2,42 @@ import { videos, type Video } from "@/data/videos"
 
 /**
  * Configuração central da Quaresma.
- * Para mudar quando a Quaresma começa, altere apenas START_DATE.
+ *
+ * START_DATE é usada APENAS para exibição (contagem regressiva na
+ * seção "Hoje"). A liberação diária dos vídeos é controlada pelas
+ * datas de cada vídeo em `data/videos.ts` — por isso alterar
+ * START_DATE não muda quais vídeos ficam liberados.
  */
 export const START_DATE = new Date(2026, 7, 15, 0, 0, 0, 0) // 15 de agosto de 2026
-export const TOTAL_DAYS = videos.length // 40
+export const TOTAL_DAYS = videos.length // 39
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24
+
+// ============================================================
+//  RECURSOS DE CONTROLE (edite aqui)
+// ============================================================
+
+/**
+ * RECURSO EMERGENCIAL — Liberar TODOS os vídeos de uma vez.
+ *
+ * Deixe `false` durante o funcionamento normal (liberação diária).
+ * Se a liberação automática falhar, mude para `true`: todos os
+ * vídeos ficam desbloqueados imediatamente, sem esperar a data.
+ */
+export const UNLOCK_ALL_VIDEOS = false
+
+/**
+ * SIMULAÇÃO DE DATA — para testar/prever a liberação diária.
+ *
+ * Há duas formas de simular qual é o dia "hoje":
+ *  1) SEM editar o código: adicione `?simular=AAAA-MM-DD` no fim do
+ *     endereço do site. Ex.: `https://seu-site.com/?simular=2026-08-20`.
+ *  2) NO código: preencha a constante abaixo com uma data no formato
+ *     "AAAA-MM-DD". Deixe `null` em produção (usa a data real).
+ *
+ * A simulação afeta tanto os vídeos liberados quanto a seção "Hoje".
+ */
+export const SIMULATED_DATE: string | null = null
 
 export type QuaresmaStatus = "before" | "during" | "after"
 
@@ -38,6 +68,26 @@ function parseLocalDate(iso: string): Date {
 /** Diferença em dias inteiros entre duas datas (b - a). */
 export function diffInDays(a: Date, b: Date): number {
   return Math.round((atMidnight(b).getTime() - atMidnight(a).getTime()) / MS_PER_DAY)
+}
+
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
+
+/**
+ * Retorna a data que deve ser tratada como "hoje".
+ *
+ * Prioridade: 1) parâmetro `?simular=AAAA-MM-DD` na URL (só no
+ * navegador); 2) a constante SIMULATED_DATE; 3) a data real.
+ * Assim é possível testar a liberação diária sem esperar as datas.
+ */
+export function resolveNow(): Date {
+  if (typeof window !== "undefined") {
+    const param = new URLSearchParams(window.location.search).get("simular")
+    if (param && DATE_RE.test(param)) return parseLocalDate(param)
+  }
+  if (SIMULATED_DATE && DATE_RE.test(SIMULATED_DATE)) {
+    return parseLocalDate(SIMULATED_DATE)
+  }
+  return new Date()
 }
 
 /**
@@ -93,6 +143,7 @@ export function getCurrentDay(now: Date = new Date()): CurrentDayInfo {
 
 /** Um vídeo está desbloqueado se seu dia já chegou (ou a Quaresma terminou). */
 export function isVideoUnlocked(video: Video, now: Date = new Date()): boolean {
+  if (UNLOCK_ALL_VIDEOS) return true
   const info = getCurrentDay(now)
   if (info.status === "after") return true
   if (info.status === "before") return false

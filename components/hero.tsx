@@ -38,7 +38,7 @@ export function Hero() {
         </motion.h1>
 
         <motion.p variants={item} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-muted-foreground">
-          Um tempo de oração, fé e combate espiritual — de 15/08 a 29/09.
+          Um tempo de oração, fé e combate espiritual.
         </motion.p>
 
         <motion.div variants={item} className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

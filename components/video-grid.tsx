@@ -1,7 +1,7 @@
 "use client"
 
 import { videos } from "@/data/videos"
-import { isVideoUnlocked } from "@/lib/quaresma"
+import { isVideoUnlocked, resolveNow } from "@/lib/quaresma"
 import { useQuaresma } from "@/hooks/use-quaresma"
 import { useProgressContext } from "@/components/progress-provider"
 import { useVideoModal } from "@/components/video-modal"
@@ -13,7 +13,7 @@ export function VideoGrid() {
   const { openVideo } = useVideoModal()
   const { isWatched, watchedCount, percentage, hydrated } = useProgressContext()
 
-  const now = new Date()
+  const now = resolveNow()
 
   return (
     <section id="todos-os-dias" className="mx-auto w-full max-w-6xl scroll-mt-24 px-4 py-16 sm:py-20">
