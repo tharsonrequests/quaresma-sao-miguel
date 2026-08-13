@@ -27,7 +27,7 @@ export function Hero() {
           className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-gold"
         >
           <Sparkles className="size-3.5" aria-hidden="true" />
-          40 dias de graça
+          15 de agosto a 29 de setembro
         </motion.p>
 
         <motion.h1
@@ -38,7 +38,7 @@ export function Hero() {
         </motion.h1>
 
         <motion.p variants={item} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-muted-foreground">
-          40 dias de oração, fé e combate espiritual.
+          Um tempo de oração, fé e combate espiritual — de 15/08 a 29/09.
         </motion.p>
 
         <motion.div variants={item} className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

@@ -7,12 +7,12 @@ const CARDS = [
   {
     icon: BookOpen,
     title: "O que é",
-    text: "A Quaresma de São Miguel é uma tradição de 40 dias de oração e penitência em honra ao Arcanjo, tempo de conversão e de combate espiritual contra o mal.",
+    text: "A Quaresma de São Miguel é uma tradição de oração e penitência em honra ao Arcanjo, vivida de 15 de agosto a 29 de setembro — tempo de conversão e de combate espiritual contra o mal.",
   },
   {
     icon: Users,
     title: "Quem pode participar",
-    text: "Todos são bem-vindos. Basta o desejo de rezar um pouco a cada dia e caminhar com fé, no seu ritmo, durante os 40 dias.",
+    text: "Todos são bem-vindos. Basta o desejo de rezar um pouco a cada dia e caminhar com fé, no seu ritmo, do início ao fim da devoção.",
   },
   {
     icon: ShieldHalf,

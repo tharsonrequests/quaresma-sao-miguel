@@ -44,7 +44,7 @@ export function CurrentDay() {
               A Quaresma começa em breve
             </h2>
             <p className="mx-auto mt-3 max-w-md text-pretty text-muted-foreground">
-              Prepare o coração. Faltam {daysUntilStart} {daysUntilStart === 1 ? "dia" : "dias"} para o início dos 40 dias de oração.
+              Prepare o coração. Faltam {daysUntilStart} {daysUntilStart === 1 ? "dia" : "dias"} para o início desta jornada de oração.
             </p>
             <div className="mt-8">
               <Countdown target={START_DATE} />
@@ -101,7 +101,7 @@ export function CurrentDay() {
               Perseverastes até o fim
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-pretty text-muted-foreground">
-              Os 40 dias da Quaresma de São Miguel Arcanjo foram concluídos. Todos os vídeos estão liberados abaixo para
+              A Quaresma de São Miguel Arcanjo foi concluída. Todos os vídeos estão liberados abaixo para
               que você continue meditando quando quiser. Que São Miguel continue a defender-vos no combate.
             </p>
             <div className="mt-8">

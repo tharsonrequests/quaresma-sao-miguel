@@ -29,6 +29,12 @@ function atMidnight(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate())
 }
 
+/** Converte "AAAA-MM-DD" em uma data local à meia-noite. */
+function parseLocalDate(iso: string): Date {
+  const [y, m, d] = iso.split("-").map(Number)
+  return new Date(y, m - 1, d)
+}
+
 /** Diferença em dias inteiros entre duas datas (b - a). */
 export function diffInDays(a: Date, b: Date): number {
   return Math.round((atMidnight(b).getTime() - atMidnight(a).getTime()) / MS_PER_DAY)
@@ -36,21 +42,29 @@ export function diffInDays(a: Date, b: Date): number {
 
 /**
  * Calcula o dia atual da Quaresma com base na data fornecida (padrão: hoje).
+ *
+ * A liberação segue as datas reais de cada vídeo (que já pulam os domingos),
+ * então aos domingos nenhum vídeo novo é liberado: permanece o do último
+ * dia rezado.
  */
 export function getCurrentDay(now: Date = new Date()): CurrentDayInfo {
-  const elapsed = diffInDays(START_DATE, now) // 0 no primeiro dia
+  const today = atMidnight(now)
+  const firstDate = parseLocalDate(videos[0].date)
+  const lastDate = parseLocalDate(videos[videos.length - 1].date)
 
-  if (elapsed < 0) {
+  // Ainda não começou.
+  if (today.getTime() < firstDate.getTime()) {
     return {
       status: "before",
       currentDay: 0,
       totalDays: TOTAL_DAYS,
       video: null,
-      daysUntilStart: Math.abs(elapsed),
+      daysUntilStart: diffInDays(today, firstDate),
     }
   }
 
-  if (elapsed >= TOTAL_DAYS) {
+  // Já terminou.
+  if (today.getTime() > lastDate.getTime()) {
     return {
       status: "after",
       currentDay: TOTAL_DAYS,
@@ -60,7 +74,14 @@ export function getCurrentDay(now: Date = new Date()): CurrentDayInfo {
     }
   }
 
-  const currentDay = elapsed + 1
+  // Em andamento: o dia atual é o do último vídeo cuja data já chegou.
+  let currentDay = 0
+  for (const v of videos) {
+    if (parseLocalDate(v.date).getTime() <= today.getTime()) {
+      currentDay = v.day
+    }
+  }
+
   return {
     status: "during",
     currentDay,

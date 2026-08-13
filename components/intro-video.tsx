@@ -34,7 +34,7 @@ export function IntroVideo() {
             Como se preparar para a Quaresma de São Miguel
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-pretty text-muted-foreground">
-            Antes de iniciar os 40 dias, assista a esta introdução e prepare o coração para o combate espiritual.
+            Antes de iniciar esta jornada, assista a esta introdução e prepare o coração para o combate espiritual.
           </p>
         </div>
 
