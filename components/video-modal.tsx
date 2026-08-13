@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Check, Share2, X } from "lucide-react"
+import { Check, Share2, Volume2, X } from "lucide-react"
 import type { Video } from "@/data/videos"
 import { formatDate, getEmbedUrl } from "@/lib/quaresma"
 import { useProgressContext } from "@/components/progress-provider"
@@ -22,12 +22,33 @@ export function useVideoModal(): VideoModalContextValue {
 export function VideoModalProvider({ children }: { children: ReactNode }) {
   const [video, setVideo] = useState<Video | null>(null)
   const [copied, setCopied] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  // No celular o vídeo abre sem som (regra do sistema). Ao ativar o som,
+  // remontamos o player para que ele recomece do início já com áudio.
+  const [soundOn, setSoundOn] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
   const { markWatched } = useProgressContext()
+
+  // Celulares/tablets (toque, sem mouse) bloqueiam autoplay COM som.
+  // Detectamos esse caso para iniciar o vídeo silenciado — assim ele
+  // reproduz com um único toque; no computador continua com som.
+  // Combinamos vários sinais para funcionar em todos os aparelhos reais.
+  useEffect(() => {
+    const detect = () => {
+      const coarse = window.matchMedia("(pointer: coarse)").matches
+      const touch = navigator.maxTouchPoints > 0
+      const mobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+      setIsMobile(coarse || touch || mobileUA)
+    }
+    detect()
+    window.addEventListener("resize", detect)
+    return () => window.removeEventListener("resize", detect)
+  }, [])
 
   const openVideo = useCallback(
     (v: Video) => {
       setCopied(false)
+      setSoundOn(false)
       setVideo(v)
       markWatched(v.day)
     },
@@ -121,8 +142,8 @@ export function VideoModalProvider({ children }: { children: ReactNode }) {
               <div className="aspect-video w-full bg-black">
                 {video.youtubeId ? (
                   <iframe
-                    key={video.youtubeId}
-                    src={getEmbedUrl(video.youtubeId)}
+                    key={`${video.youtubeId}-${soundOn ? "som" : "mudo"}`}
+                    src={getEmbedUrl(video.youtubeId, isMobile && !soundOn)}
                     title={`Dia ${video.day}: ${video.title}`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
@@ -134,6 +155,20 @@ export function VideoModalProvider({ children }: { children: ReactNode }) {
                   </div>
                 )}
               </div>
+
+              {isMobile && video.youtubeId && !soundOn && (
+                <div className="flex flex-col items-center gap-1.5 px-4 pt-4 text-center sm:px-5">
+                  <button
+                    type="button"
+                    onClick={() => setSoundOn(true)}
+                    className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground shadow-lg transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  >
+                    <Volume2 className="size-4" />
+                    Ativar som
+                  </button>
+                  <span className="text-xs text-muted-foreground">O vídeo recomeça do início com áudio.</span>
+                </div>
+              )}
 
               <div className="flex items-center justify-end gap-3 p-4 sm:p-5">
                 <button
