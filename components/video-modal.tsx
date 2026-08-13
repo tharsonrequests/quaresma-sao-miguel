@@ -22,8 +22,25 @@ export function useVideoModal(): VideoModalContextValue {
 export function VideoModalProvider({ children }: { children: ReactNode }) {
   const [video, setVideo] = useState<Video | null>(null)
   const [copied, setCopied] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
   const { markWatched } = useProgressContext()
+
+  // Celulares/tablets (toque, sem mouse) bloqueiam autoplay COM som.
+  // Detectamos esse caso para iniciar o vídeo silenciado — assim ele
+  // reproduz com um único toque; no computador continua com som.
+  // Combinamos vários sinais para funcionar em todos os aparelhos reais.
+  useEffect(() => {
+    const detect = () => {
+      const coarse = window.matchMedia("(pointer: coarse)").matches
+      const touch = navigator.maxTouchPoints > 0
+      const mobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+      setIsMobile(coarse || touch || mobileUA)
+    }
+    detect()
+    window.addEventListener("resize", detect)
+    return () => window.removeEventListener("resize", detect)
+  }, [])
 
   const openVideo = useCallback(
     (v: Video) => {
@@ -122,7 +139,7 @@ export function VideoModalProvider({ children }: { children: ReactNode }) {
                 {video.youtubeId ? (
                   <iframe
                     key={video.youtubeId}
-                    src={getEmbedUrl(video.youtubeId)}
+                    src={getEmbedUrl(video.youtubeId, isMobile)}
                     title={`Dia ${video.day}: ${video.title}`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
@@ -134,6 +151,12 @@ export function VideoModalProvider({ children }: { children: ReactNode }) {
                   </div>
                 )}
               </div>
+
+              {isMobile && video.youtubeId && (
+                <p className="px-4 pt-3 text-center text-xs text-muted-foreground sm:px-5">
+                  O vídeo inicia sem som no celular. Toque no ícone de som do player para ouvir.
+                </p>
+              )}
 
               <div className="flex items-center justify-end gap-3 p-4 sm:p-5">
                 <button
