@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Hoje", href: "#hoje" },
   { label: "Todos os Dias", href: "#todos-os-dias" },
   { label: "Como Rezar", href: "#como-rezar" },
+  { label: "Checklist", href: "#checklist" },
   { label: "Sobre", href: "#sobre" },
 ]
 

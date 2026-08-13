@@ -24,7 +24,20 @@ export function VideoCard({ video, unlocked, watched, onPlay }: VideoCardProps) 
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="group flex scroll-mt-24 flex-col overflow-hidden rounded-2xl border border-border bg-card/50"
     >
-      <div className="relative aspect-video w-full overflow-hidden">
+      <button
+        type="button"
+        disabled={!unlocked}
+        onClick={() => unlocked && onPlay(video)}
+        aria-label={
+          unlocked
+            ? `Assistir ao dia ${video.day}: ${video.title}`
+            : `Bloqueado até ${formatDate(video.date)}`
+        }
+        className={cn(
+          "relative block aspect-video w-full overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          unlocked ? "cursor-pointer" : "cursor-not-allowed",
+        )}
+      >
         <Image
           src={getThumbnail(video) || "/placeholder.svg"}
           alt={`Miniatura do dia ${video.day}: ${video.title}`}
@@ -57,11 +70,11 @@ export function VideoCard({ video, unlocked, watched, onPlay }: VideoCardProps) 
         )}
 
         {unlocked && (
-          <span className="absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold/90 text-gold-foreground opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
+          <span className="absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gold/90 text-gold-foreground opacity-90 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
             <Play className="size-5 translate-x-0.5 fill-current" />
           </span>
         )}
-      </div>
+      </button>
 
       <div className="flex flex-1 flex-col p-4">
         <h3 className="text-pretty font-serif text-lg font-semibold leading-snug">{video.title}</h3>

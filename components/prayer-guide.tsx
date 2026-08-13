@@ -88,11 +88,12 @@ export function PrayerGuide() {
       </ol>
 
       <motion.div
+        id="checklist"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto mt-14 max-w-2xl rounded-2xl border border-gold/25 bg-card/50 p-6 sm:p-8"
+        className="mx-auto mt-14 max-w-2xl scroll-mt-24 rounded-2xl border border-gold/25 bg-card/50 p-6 sm:p-8"
       >
         <div className="flex flex-col items-center text-center">
           <span className="inline-flex size-11 items-center justify-center rounded-xl bg-gold/10 text-gold">

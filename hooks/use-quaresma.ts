@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getCurrentDay, type CurrentDayInfo, TOTAL_DAYS } from "@/lib/quaresma"
+import { getCurrentDay, resolveNow, type CurrentDayInfo, TOTAL_DAYS } from "@/lib/quaresma"
 
 /**
  * Retorna o estado atual da Quaresma calculado no cliente.
@@ -18,10 +18,10 @@ export function useQuaresma() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    setInfo(getCurrentDay())
+    setInfo(getCurrentDay(resolveNow()))
     setReady(true)
     // Reavalia à meia-noite / quando a aba volta ao foco.
-    const onVisible = () => setInfo(getCurrentDay())
+    const onVisible = () => setInfo(getCurrentDay(resolveNow()))
     document.addEventListener("visibilitychange", onVisible)
     return () => document.removeEventListener("visibilitychange", onVisible)
   }, [])
