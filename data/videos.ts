@@ -15,7 +15,9 @@
  * Deixe "" (vazio) nos dias que ainda não têm vídeo — eles aparecem
  * bloqueados até a data e mostram um aviso amigável quando abertos.
  *
- * As datas são calculadas a partir de 15 de agosto de 2026 (Dia 1).
+ * As datas são calculadas a partir de 15 de agosto de 2026 (Dia 1),
+ * PULANDO os domingos (a Quaresma de São Miguel não é rezada aos domingos).
+ * Assim, a devoção vai de 15/08 a 29/09 em 39 dias.
  * Se você alterar a data inicial em `lib/quaresma.ts`, atualize também aqui.
  */
 
@@ -30,7 +32,7 @@ export interface Video {
 const THUMB = "/images/thumb-placeholder.png"
 
 /**
- * LINKS DOS 40 VÍDEOS.
+ * LINKS DOS 39 VÍDEOS.
  * Cole o link de cada dia na linha correspondente (entre as aspas).
  */
 const LINKS: string[] = [
@@ -73,10 +75,9 @@ const LINKS: string[] = [
   "https://www.youtube.com/watch?v=uqpg_wW43mo&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=3", // Dia 37
   "https://www.youtube.com/watch?v=5hHIyKhxw-s&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=2", // Dia 38
   "https://www.youtube.com/watch?v=IccNQWfamUk&list=PLFHiit_0T6mnxqwHwQIih1104GPU8znLS&index=1", // Dia 39
-  "https://www.youtube.com/watch?v=kGVELI-Bgxg&t=4s", // Dia 40
 ]
 
-/** Títulos meditativos para cada um dos 40 dias. */
+/** Títulos meditativos para cada um dos 39 dias. */
 const TITLES = [
   "O chamado ao combate espiritual",
   "Quem é como Deus?",
@@ -116,7 +117,6 @@ const TITLES = [
   "O amor que vence o mal",
   "A entrega total",
   "A alegria da conversão",
-  "A véspera da festa",
   "São Miguel, defendei-nos",
 ]
 
@@ -151,21 +151,32 @@ export function extractYouTubeId(input: string): string {
   }
 }
 
-/** Gera a data (AAAA-MM-DD) do dia N a partir de 15/08/2026. */
-function dateForDay(day: number): string {
-  const start = new Date(Date.UTC(2026, 7, 15)) // mês 7 = agosto
-  start.setUTCDate(start.getUTCDate() + (day - 1))
-  return start.toISOString().slice(0, 10)
+/**
+ * Gera as datas de liberação (AAAA-MM-DD) a partir de 15/08/2026,
+ * PULANDO os domingos. A Quaresma de São Miguel não é rezada aos domingos,
+ * então nenhum vídeo é liberado nesse dia — por isso a devoção vai de
+ * 15 de agosto a 29 de setembro em exatamente 39 dias.
+ */
+function generateReleaseDates(count: number): string[] {
+  const dates: string[] = []
+  const cursor = new Date(Date.UTC(2026, 7, 15)) // 15 de agosto de 2026 (mês 7 = agosto)
+  while (dates.length < count) {
+    if (cursor.getUTCDay() !== 0) {
+      // getUTCDay() === 0 é domingo — pulamos esse dia.
+      dates.push(cursor.toISOString().slice(0, 10))
+    }
+    cursor.setUTCDate(cursor.getUTCDate() + 1)
+  }
+  return dates
 }
 
-export const videos: Video[] = Array.from({ length: 40 }, (_, i) => {
-  const day = i + 1
-  return {
-    day,
-    title: TITLES[i],
-    // O ID é extraído automaticamente do link colado em LINKS.
-    youtubeId: extractYouTubeId(LINKS[i] ?? ""),
-    thumbnail: THUMB,
-    date: dateForDay(day),
-  }
-})
+const RELEASE_DATES = generateReleaseDates(TITLES.length)
+
+export const videos: Video[] = TITLES.map((title, i) => ({
+  day: i + 1,
+  title,
+  // O ID é extraído automaticamente do link colado em LINKS.
+  youtubeId: extractYouTubeId(LINKS[i] ?? ""),
+  thumbnail: THUMB,
+  date: RELEASE_DATES[i],
+}))

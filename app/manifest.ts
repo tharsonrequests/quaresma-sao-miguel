@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Quaresma de São Miguel Arcanjo 2026",
     short_name: "São Miguel 2026",
-    description: "40 dias de oração, fé e combate espiritual.",
+    description: "Um tempo de oração, fé e combate espiritual, de 15 de agosto a 29 de setembro.",
     start_url: "/",
     scope: "/",
     display: "standalone",

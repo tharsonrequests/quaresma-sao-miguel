@@ -18,9 +18,12 @@ export function VideoGrid() {
   return (
     <section id="todos-os-dias" className="mx-auto w-full max-w-6xl scroll-mt-24 px-4 py-16 sm:py-20">
       <div className="mx-auto mb-10 max-w-2xl text-center">
-        <h2 className="text-balance font-serif text-3xl font-semibold sm:text-4xl">Todos os 40 dias</h2>
+        <h2 className="text-balance font-serif text-3xl font-semibold sm:text-4xl">De 15 de Agosto a 29 de Setembro</h2>
         <p className="mt-3 text-pretty text-muted-foreground">
           Um vídeo por dia. Os próximos são liberados automaticamente na data certa.
+        </p>
+        <p className="mt-2 text-xs text-muted-foreground/80">
+          Aos domingos não se reza a Quaresma de São Miguel.
         </p>
         {hydrated && (
           <div className="mx-auto mt-6 max-w-md">
