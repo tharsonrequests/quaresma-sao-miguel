@@ -79,7 +79,7 @@ const LINKS: string[] = [
 
 /** Títulos meditativos para cada um dos 39 dias. */
 const TITLES = [
-  "O chamado ao combate espiritual",
+  "A intercessão de Nossa Senhora",
   "Quem é como Deus?",
   "A humildade dos anjos fiéis",
   "Vigiai e orai",
