@@ -24,7 +24,7 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24
  * Se a liberação automática falhar, mude para `true`: todos os
  * vídeos ficam desbloqueados imediatamente, sem esperar a data.
  */
-export const UNLOCK_ALL_VIDEOS = true
+export const UNLOCK_ALL_VIDEOS = false
 
 /**
  * SIMULAÇÃO DE DATA — para testar/prever a liberação diária.
